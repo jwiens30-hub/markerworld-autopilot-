@@ -1,3 +1,4 @@
+
 name: Unpack Autopilot
 
 on:
@@ -20,9 +21,13 @@ jobs:
           rm makerworld_autopilot_v2.zip
 
       - name: Commit extracted files
+        env:
+          GH_TOKEN: ${{ secrets.MW_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/jwiens30-hub/markerworld-autopilot-.git"
           git add -A
           git commit -m "Install MakerWorld Autopilot"
-          git push
+          git push origin HEAD:main
+
